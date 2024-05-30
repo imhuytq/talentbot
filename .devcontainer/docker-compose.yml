@@ -1,0 +1,53 @@
+version: '3.8'
+
+volumes:
+  pgsql-data:
+  opensearch-data:
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    depends_on:
+      - pgsql
+      - opensearch
+
+  pgsql:
+    image: postgres:15
+    restart: unless-stopped
+    ports:
+      - '${FORWARD_PGSQL_PORT:-5432}:5432'
+    volumes:
+      - 'pgsql-data:/var/lib/postgresql/data'
+    env_file:
+      - .env
+
+  opensearch:
+    image: opensearchproject/opensearch:latest
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true # Disable JVM heap memory swapping
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # Set min and max JVM heap sizes to at least 50% of system RAM
+    env_file:
+      - .env
+    ulimits:
+      memlock:
+        soft: -1 # Set memlock to unlimited (no soft or hard limit)
+        hard: -1
+      nofile:
+        soft: 65536 # Maximum number of open files for the opensearch user - set to at least 65536
+        hard: 65536
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data # Creates volume called opensearch-data1 and mounts it to the container
+
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:latest
+    container_name: opensearch-dashboards
+    ports:
+      - '${FORWARD_OPENSEARCH_DASHBOARDS_PORT:-5601}:5601'
+    environment:
+      OPENSEARCH_HOSTS: '["https://opensearch:9200"]'

@@ -1,0 +1,85 @@
+import os
+
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8501")
+BUCKET_NAME = os.getenv("BUCKET_NAME", "talentbot")
+INDEX_RESUMES = os.getenv("INDEX_RESUMES", "resumes")
+
+DB_DSN = os.getenv("DB_DSN", "postgresql+psycopg2://postgres:postgres@pgsql:5432/postgres?sslmode=disable")
+OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com")
+CLAUDE_BASE_URL = os.getenv("CLAUDE_BASE_URL", "https://api.anthropic.com")
+
+
+INDUSTRIES = [
+    "Sales / Business Development",
+    "Retail / Wholesale",
+    "Marketing",
+    "Online Marketing",
+    "Consulting",
+    "Freight / Logistics / Warehouse",
+    "Unskilled Workers",
+    "Customer Service",
+    "NGO / Non-Profit",
+    "Security",
+    "Law / Legal Services",
+    "Telecommunications",
+    "Medical / Healthcare",
+    "Pharmacy",
+    "Purchasing / Merchandising",
+    "Import / Export",
+    "Manufacturing / Process",
+    "Wood",
+    "Printing / Publishing",
+    "HSE",
+    "Quality Control  (QA/QC)",
+    "Textiles / Garments / Fashion",
+    "Household / Personal Care",
+    "Food & Beverage (F&B)",
+    "IT - Hardware / Network",
+    "IT - Software",
+    "Administrative / Clerical",
+    "Interpreter/ Translator",
+    "Human Resources",
+    "Insurance",
+    "Accounting / Auditing / Tax",
+    "Securities",
+    "Banking",
+    "Finance / Investment",
+    "Entertainment",
+    "Event",
+    "TV / Newspaper / Editors",
+    "Advertising / PR / Communications",
+    "Arts / Creative Design",
+    "Interior / Exterior",
+    "Architect",
+    "Civil / Construction",
+    "Real Estate",
+    "Oil / Gas",
+    "Chemical Eng.",
+    "Mineral",
+    "Mechanical / Auto / Automotive",
+    "Environmental",
+    "Electrical / Electronics",
+    "Maintenance",
+    "Library",
+    "Education /Training",
+    "Agriculture",
+    "Statistics",
+    "Animal Husbandry / Veterinary",
+    "Irrigation",
+    "Biotechnology",
+    "Marine",
+    "Food Tech / Nutritionist",
+    "Forestry",
+    "Surveying / Geology",
+    "Fishery",
+    "Aviation",
+    "Restaurant / Hotel",
+    "Tourism",
+    "Others",
+]
+
+MODEL_OPTIONS = {
+    "openai_gpt_4o": "GPT-4o",
+    "anthropic_claude_3_opus": "Claude 3 Opus",
+    "gemini_pro": "Gemini Pro",
+}
